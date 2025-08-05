@@ -1,3 +1,6 @@
 [submodule "mario_html"]
 	path = mario_html
 	url = https://github.com/MahsaBazzaz/mario_html
+[submodule "sokoban_html"]
+	path = sokoban_html
+	url = https://github.com/MahsaBazzaz/sokoban_html.git
