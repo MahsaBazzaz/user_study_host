@@ -91,11 +91,13 @@ Mario.LevelState.prototype.Enter = function() {
     console.log(prev_attempts)
     if (prev_attempts != null){
         this.Attempts = parseInt(prev_attempts) + 1
+        Mario.MarioCharacter.Attempts = this.Attempts  
         setToLocalStorage("Attempts", this.Attempts)
     }
     else{
         this.Attempts = 1
         setToLocalStorage("Attempts", 1)
+        Mario.MarioCharacter.Attempts = this.Attempts  
     }
     
 	this.GotoMapState = false;

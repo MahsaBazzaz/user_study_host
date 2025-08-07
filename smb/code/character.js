@@ -12,7 +12,7 @@ Mario.Character = function() {
     this.LevelString = "none";
     this.GroundInertia = 0.89;
     this.AirInertia = 0.89;
-    
+    this.Attempts = 0
     //non static variables in Notch's code
     this.RunTime = 0;
     this.WasOnGround = false;
@@ -55,7 +55,7 @@ Mario.Character.prototype.Initialize = function(world) {
     this.Y = 0;
 	this.PowerUpTime = 0;
     this.Coins = 0;
-
+    this.Attempts = 0
     //non static variables in Notch's code
     this.RunTime = 0;
     this.WasOnGround = false;
@@ -192,6 +192,8 @@ Mario.Character.prototype.Move = function() {
     }
     
     if (Enjine.KeyboardInput.IsKeyDown(Enjine.Keys.Space) || (this.JumpTime < 0 && !this.OnGround && !this.Sliding)) {
+        appendToLocalStorage("key_log", {"game": "smb", "attempt": this.Attempts, "key": "jump", "t": Date.now()})
+
         if (this.JumpTime < 0) {
             this.Xa = this.XJumpSpeed;
             this.Ya = -this.JumpTime * this.YJumpSpeed;

@@ -54,7 +54,7 @@ Enjine.KeyboardInput = {
     
     KeyDownEvent: function(event) {
         this.Pressed[event.keyCode] = true;
-        this.LogInteraction("keydown", event);
+        
 	this.PreventScrolling(event);
     },
     
@@ -70,9 +70,9 @@ Enjine.KeyboardInput = {
         }
     },
 
-    LogInteraction: function(type, event) {
+    LogInteraction: function(event, attempt) {
         if (event.keyCode == Enjine.Keys.Space){
-            appendToLocalStorage("key_log", {"game": "smb", "t": Date.now()})
+            appendToLocalStorage("key_log", {"game": "smb", "attempt": attempt, "t": Date.now()})
         }
     }
 };
