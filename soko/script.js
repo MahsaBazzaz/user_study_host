@@ -6,8 +6,7 @@ import {appendToLocalStorage, readFromLocalStorage, setToLocalStorage} from './s
 
 // Get level number from URL hash, default to 1
 const hash = window.location.hash
-const levelFromHash = hash.replace('#', '')  || ""
-const pageId = isNaN(levelFromHash) ? "" : levelFromHash
+const pageId = hash.replace('#', '')
 
 let sokoban
 let Attempts = 0
