@@ -6,7 +6,7 @@ import {appendToLocalStorage, readFromLocalStorage, setToLocalStorage} from './s
 
 // Get level number from URL hash, default to 1
 const hash = window.location.hash
-const levelFromHash = parseInt(hash.replace('#', ''), 10)
+const levelFromHash = hash.replace('#', '') || ""
 const pageId = isNaN(levelFromHash) ? "extLxWet" : levelFromHash
 
 let sokoban
