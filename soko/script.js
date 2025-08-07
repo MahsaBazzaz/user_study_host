@@ -1,12 +1,12 @@
 import { directions, keys, multiplier } from './constants.js'
 import Sokoban from './Sokoban.js'
-import {appendToLocalStorage, readFromLocalStorage, setToLocalStorage} from './storage.js'
+import {appendToLocalStorage, readFromLocalStorage, setToLocalStorage, clearLocalStorage} from './storage.js'
 
 // init
 
 // Get level number from URL hash, default to 1
 const hash = window.location.hash
-const pageId = hash.replace('#', '')
+const pageId = hash.replace('#', '') || "8Ua6YU1D";
 
 let sokoban
 let Attempts = 0
@@ -34,7 +34,8 @@ fetch(`soko.json`)
         sokoban = new Sokoban(data, width, height)
         var prev_attempts = readFromLocalStorage("Attempts")
         if (prev_attempts != null){
-            Attempts = prev_attempts + 1
+            Attempts = parseInt(prev_attempts) + 1
+            setToLocalStorage("Attempts", Attempts)
         }
         else{
             Attempts = 1
@@ -87,5 +88,8 @@ document.addEventListener('keydown', (event) => {
 
 document.querySelector('button').addEventListener('click', (event) => {
   appendToLocalStorage("run_outcome", {"game": "soko", "attempt": Attempts, "res": "reset", "t": Date.now()})
+  Attempts += 1
+  setToLocalStorage("Attempts", Attempts)
+  // clearLocalStorage()
   sokoban.render({ restart: true })
 })

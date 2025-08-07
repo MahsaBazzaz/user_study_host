@@ -24,7 +24,7 @@ import {
 } from './utils.js'
 
 import {getAttempts} from './script.js'
-import {appendToLocalStorage} from './storage.js'
+import {appendToLocalStorage, clearLocalStorage} from './storage.js'
 
 class Sokoban {
   constructor(level, width, height) {
@@ -102,6 +102,7 @@ class Sokoban {
       this.context.fillStyle = colors.success_block.fill
       this.context.fillText('You did it!', 140, 300)
       appendToLocalStorage("run_outcome", {"game": "soko", "attempt": getAttempts(), "res": "success", "t": Date.now()})
+      // clearLocalStorage()
       this.board = generateGameBoard(this.level)
     }
   }

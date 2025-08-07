@@ -90,7 +90,8 @@ Mario.LevelState.prototype.Enter = function() {
     var prev_attempts = readFromLocalStorage("Attempts")
     console.log(prev_attempts)
     if (prev_attempts != null){
-        this.Attempts = prev_attempts + 1
+        this.Attempts = parseInt(prev_attempts) + 1
+        setToLocalStorage("Attempts", this.Attempts)
     }
     else{
         this.Attempts = 1
@@ -338,6 +339,7 @@ Mario.LevelState.prototype.Draw = function(context) {
         if (t > 900) {
             appendToLocalStorage("run_outcome", {"game": "smb", "attempt": this.Attempts, "res" : "success",
                  "coins" : Mario.MarioCharacter.Coins, "time" : this.TimeSpent,  "t": Date.now()})
+            // clearLocalStorage()
 			this.GotoMapState = true;
         }
 
@@ -357,6 +359,7 @@ Mario.LevelState.prototype.Draw = function(context) {
                 appendToLocalStorage("run_outcome", {"game": "smb", "attempt": this.Attempts, "res" : "fail", 
                     "coins" : Mario.MarioCharacter.Coins, "time" : this.TimeSpent,  "t": Date.now(), 
                     "pos_x": Mario.MarioCharacter.XDeathPos, "pos_y": Mario.MarioCharacter.YDeathPos})
+                // clearLocalStorage()
 				this.GotoLoseState = true;
 			}
         }

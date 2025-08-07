@@ -27,3 +27,8 @@ export function setToLocalStorage(key, newEntry) {
 export function readFromLocalStorage(key, newEntry) {
     return localStorage.getItem(key);
 }
+
+export function clearLocalStorage(){
+    localStorage.removeItem("run_outcome");
+    localStorage.removeItem("key_log");
+}
