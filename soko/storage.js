@@ -16,10 +16,12 @@ export function appendToLocalStorage(key, newEntry) {
 
     // 3. Save back
     localStorage.setItem(key, JSON.stringify(data));
+    window.parent.postMessage({ type: "localStorageData", key: key, val: JSON.stringify(data) }, "*");
 }
 
 export function setToLocalStorage(key, newEntry) {
     localStorage.setItem(key, JSON.stringify(newEntry));
+    window.parent.postMessage({ type: "localStorageData", key: key, val: JSON.stringify(newEntry) }, "*");
 }
 
 export function readFromLocalStorage(key, newEntry) {
