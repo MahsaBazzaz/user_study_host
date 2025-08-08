@@ -37,7 +37,7 @@ export const getY = (y, direction, spaces = 1) => {
 }
 
 export function generateGameBoardOg(level) {
-  console.log('Level text:', level);
+  // console.log('Level text:', level);
   let arr = []
   if (level){
     const rows = level.split('\n');

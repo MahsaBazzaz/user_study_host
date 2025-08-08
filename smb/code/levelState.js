@@ -88,7 +88,7 @@ Mario.LevelState.prototype.Enter = function() {
     this.StartTime = 1;
     this.TimeSpent = 0
     var prev_attempts = readFromLocalStorage("Attempts")
-    console.log(prev_attempts)
+    // console.log(prev_attempts)
     if (prev_attempts != null){
         this.Attempts = parseInt(prev_attempts) + 1
         Mario.MarioCharacter.Attempts = this.Attempts  

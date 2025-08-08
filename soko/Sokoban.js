@@ -28,7 +28,7 @@ import {appendToLocalStorage, clearLocalStorage} from './storage.js'
 
 class Sokoban {
   constructor(level, width, height) {
-    console.log(width,height)
+    // console.log(width,height)
     let size = { width : width, height : height}
     this.canvas = document.querySelector('canvas')
     this.canvas.width = size.width
