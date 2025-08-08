@@ -95,6 +95,7 @@ document.getElementById('start').addEventListener('click', (event) => {
         appendToLocalStorage("run_outcome", {"game": "soko", "attempt": Attempts, "res": "start", "t": Date.now()})
         event.target.remove(); // removes the clicked button
         document.getElementById('restart').style.display = 'block';
+        window.parent.postMessage({ type: "message",  action: "start", id : pageId }, "*");
         sokoban.render({ restart: true })
     })
     .catch(error => {

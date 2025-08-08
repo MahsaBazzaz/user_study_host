@@ -31,7 +31,7 @@
                             throw new Error(`No data found for id: ${pageId}`);
                         }
                         
-                        
+                        window.parent.postMessage({ type: "message",  action: "start", id: pageId }, "*");
                         new Enjine.Application().Initialize(new Mario.LoadingState(data, pageId), THE_WIDTH, THE_HEIGHT);
                         event.target.remove(); // removes the clicked button
                     })
