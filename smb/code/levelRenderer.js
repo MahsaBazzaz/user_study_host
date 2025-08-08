@@ -77,8 +77,18 @@ Mario.LevelRenderer.prototype.DrawDynamic = function(context, camera) {
                 if (yo > 0) {
                     yo = (Math.sin((yo - this.Delta) / 4 * Math.PI) * 8) | 0;
                 }
-                frame = this.Background[(((b % 16) / 4) | 0) * 4 + animTime][(b / 16) | 0];
-                context.drawImage(Enjine.Resources.Images["map"], frame.X, frame.Y, frame.Width, frame.Height, (x << 4) - camera.X, (y << 4) - camera.Y - yo, frame.Width, frame.Height);
+                try {
+                    // Try to get the frame from the background
+                    if (!this.Background || !this.Background[(((b % 16) / 4) | 0) * 4 + animTime] || !this.Background[(((b % 16) / 4) | 0) * 4 + animTime][(b / 16) | 0]) {
+                        throw new Error("Background tilesheet not loaded");
+                    }
+                    frame = this.Background[(((b % 16) / 4) | 0) * 4 + animTime][(b / 16) | 0];
+                    context.drawImage(Enjine.Resources.Images["map"], frame.X, frame.Y, frame.Width, frame.Height, (x << 4) - camera.X, (y << 4) - camera.Y - yo, frame.Width, frame.Height);
+                }
+                catch (e) {
+                        console.log("Background not loaded, retrying...", e);
+                        this.Background = Mario.SpriteCuts.GetLevelSheet();
+                }
             }
         }
     }
