@@ -26,10 +26,18 @@ Mario.BackgroundRenderer.prototype.Draw = function(context, camera) {
     for (x = xTileStart; x <= xTileEnd; x++) {
         for (y = 0; y < this.TilesY; y++) {
             b = this.Level.GetBlock(x, y) & 0xff;
-            frame = this.Background[b % 8][(b / 8) | 0];
-            
-            //bitshifting by five is the same as multiplying by 32
-            context.drawImage(Enjine.Resources.Images["background"], frame.X, frame.Y, frame.Width, frame.Height, ((x << 5) - xCam) | 0, (y << 5) | 0, frame.Width, frame.Height);
+            try {
+                    // Try to get the frame from the background
+                    if (!this.Background || !this.Background[b % 8] || !this.Background[b % 8][(b / 8) | 0]) {
+                        throw new Error("Background tilesheet not loaded");
+                    }
+                    frame = this.Background[b % 8][(b / 8) | 0];
+                    //bitshifting by five is the same as multiplying by 32
+                    context.drawImage(Enjine.Resources.Images["background"], frame.X, frame.Y, frame.Width, frame.Height, ((x << 5) - xCam) | 0, (y << 5) | 0, frame.Width, frame.Height);
+                }
+            catch (e) {
+                    console.warn("Background not loaded, retrying...", e);
+            }
         }
     }
 };
