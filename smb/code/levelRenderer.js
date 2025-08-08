@@ -153,7 +153,20 @@ Mario.LevelRenderer.prototype.DrawExit0 = function(context, camera, bar) {
 Mario.LevelRenderer.prototype.DrawExit1 = function(context, camera) {
     var y = 0, frame = null;
     for (y = this.Level.ExitY - 8; y < this.Level.ExitY; y++) {
-        frame = this.Background[13][y === this.Level.ExitY - 8 ? 4 : 5];
-        context.drawImage(Enjine.Resources.Images["map"], frame.X, frame.Y, frame.Width, frame.Height, (this.Level.ExitX << 4) - camera.X + 16, (y << 4) - camera.Y, frame.Width, frame.Height);
+
+        try {
+            // Try to get the frame from the background
+            if (!this.Background || !this.Background[13] || !this.Background[13][y === this.Level.ExitY - 8 ? 4 : 5]) {
+                throw new Error("Background tilesheet not loaded");
+            }
+            frame = this.Background[13][y === this.Level.ExitY - 8 ? 4 : 5];
+            context.drawImage(Enjine.Resources.Images["map"], frame.X, frame.Y, frame.Width, frame.Height, (this.Level.ExitX << 4) - camera.X + 16, (y << 4) - camera.Y, frame.Width, frame.Height);
+            }
+        catch (e) {
+                console.log("Background not loaded, retrying...", e);
+                this.Background = Mario.SpriteCuts.GetLevelSheet();
+        }
+
+        
     }
 };
