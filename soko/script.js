@@ -62,21 +62,29 @@ document.addEventListener('keydown', (event) => {
   switch (event.key) {
     case keys.up:
     case keys.w:
+      event.preventDefault();
+      event.stopPropagation();
       sokoban.move(playerCoords, directions.up)
       appendToLocalStorage("key_log", {"game": "soko", "attempt": Attempts, "move": "up",  "t": Date.now()})
       break
     case keys.down:
     case keys.s:
+      event.preventDefault();
+      event.stopPropagation();
       sokoban.move(playerCoords, directions.down)
       appendToLocalStorage("key_log", {"game": "soko", "attempt": Attempts, "move": "down",  "t": Date.now()})
       break
     case keys.left:
     case keys.a:
+      event.preventDefault();
+      event.stopPropagation();
       sokoban.move(playerCoords, directions.left)
       appendToLocalStorage("key_log", {"game": "soko", "attempt": Attempts, "move": "left",  "t": Date.now()})
       break
     case keys.right:
     case keys.d:
+      event.preventDefault();
+      event.stopPropagation();
       sokoban.move(playerCoords, directions.right)
       appendToLocalStorage("key_log", {"game": "soko", "attempt": Attempts, "move": "right",  "t": Date.now()})
       break
