@@ -3,19 +3,16 @@ import Sokoban from './Sokoban.js'
 import {appendToLocalStorage, readFromLocalStorage, setToLocalStorage, clearLocalStorage} from './storage.js'
 
 // init
-
-// Get level number from URL hash, default to 1
-const hash = window.location.hash
-const pageId = hash.replace('#', '') || "8Ua6YU1D";
-
 let sokoban
 let Attempts = 0
-
+let PageId = ""
 export function getAttempts() {
     return Attempts;
 }
 
-
+export function getPageId() {
+    return PageId;
+}
 
 
 // re-render
@@ -28,28 +25,28 @@ document.addEventListener('keydown', (event) => {
       event.preventDefault();
       event.stopPropagation();
       sokoban.move(playerCoords, directions.up)
-      appendToLocalStorage("key_log", {"game": "soko", "attempt": Attempts, "move": "up",  "t": Date.now()})
+      appendToLocalStorage("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "up",  "t": Date.now()})
       break
     case keys.down:
     case keys.s:
       event.preventDefault();
       event.stopPropagation();
       sokoban.move(playerCoords, directions.down)
-      appendToLocalStorage("key_log", {"game": "soko", "attempt": Attempts, "move": "down",  "t": Date.now()})
+      appendToLocalStorage("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "down",  "t": Date.now()})
       break
     case keys.left:
     case keys.a:
       event.preventDefault();
       event.stopPropagation();
       sokoban.move(playerCoords, directions.left)
-      appendToLocalStorage("key_log", {"game": "soko", "attempt": Attempts, "move": "left",  "t": Date.now()})
+      appendToLocalStorage("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "left",  "t": Date.now()})
       break
     case keys.right:
     case keys.d:
       event.preventDefault();
       event.stopPropagation();
       sokoban.move(playerCoords, directions.right)
-      appendToLocalStorage("key_log", {"game": "soko", "attempt": Attempts, "move": "right",  "t": Date.now()})
+      appendToLocalStorage("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "right",  "t": Date.now()})
       break
     default:
   }
@@ -58,14 +55,32 @@ document.addEventListener('keydown', (event) => {
 })
 
 document.getElementById('restart').addEventListener('click', (event) => {
-  appendToLocalStorage("run_outcome", {"game": "soko", "attempt": Attempts, "res": "reset", "t": Date.now()})
+  appendToLocalStorage("run_outcome", `run_outcome_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "res": "reset", "t": Date.now()})
   Attempts += 1
-  setToLocalStorage("Attempts", Attempts)
+  setToLocalStorage(`Attempts_${PageId}`, Attempts)
   // clearLocalStorage()
   sokoban.render({ restart: true })
 })
 
 document.getElementById('start').addEventListener('click', (event) => {
+  const hash = window.location.hash
+  console.log(hash)
+  PageId = hash.replace('#', '') || "8Ua6YU1D";
+  console.log(PageId)
+  var prev_attempts = readFromLocalStorage(`Attempts_${PageId}`)
+  if (prev_attempts != null){
+      Attempts = parseInt(prev_attempts) + 1
+      setToLocalStorage(`Attempts_${PageId}`, Attempts)
+  }
+  else{
+      Attempts = 1
+      setToLocalStorage(`Attempts_${PageId}`, 1)
+  }
+  appendToLocalStorage("run_outcome", `run_outcome_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "res": "start", "t": Date.now()})
+  event.target.remove(); // removes the clicked button
+  document.getElementById('restart').style.display = 'block';
+  window.parent.postMessage({ type: "message",  action: "start", id : PageId }, "*");
+
   fetch(`soko.json`)
     .then(response => {
         if (!response.ok) {
@@ -74,28 +89,18 @@ document.getElementById('start').addEventListener('click', (event) => {
         return response.json();
     })
     .then(jsonData => {
-        const data = jsonData[pageId];
+      // Get level number from URL hash, default to 1
+        
+        const data = jsonData[PageId];
 
         if (!data) {
-            throw new Error(`No data found for id: ${pageId}`);
+            throw new Error(`No data found for id: ${PageId}`);
         }
         const rows = data.split('\n');
         const height = rows.length * multiplier;
         const width = rows[0].length * multiplier;
         sokoban = new Sokoban(data, width, height)
-        var prev_attempts = readFromLocalStorage("Attempts")
-        if (prev_attempts != null){
-            Attempts = parseInt(prev_attempts) + 1
-            setToLocalStorage("Attempts", Attempts)
-        }
-        else{
-            Attempts = 1
-            setToLocalStorage("Attempts", 1)
-        }
-        appendToLocalStorage("run_outcome", {"game": "soko", "attempt": Attempts, "res": "start", "t": Date.now()})
-        event.target.remove(); // removes the clicked button
-        document.getElementById('restart').style.display = 'block';
-        window.parent.postMessage({ type: "message",  action: "start", id : pageId }, "*");
+        
         sokoban.render({ restart: true })
     })
     .catch(error => {

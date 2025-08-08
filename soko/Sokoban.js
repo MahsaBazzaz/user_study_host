@@ -23,7 +23,7 @@ import {
   PlaySound
 } from './utils.js'
 
-import {getAttempts} from './script.js'
+import {getAttempts, getPageId} from './script.js'
 import {appendToLocalStorage, clearLocalStorage} from './storage.js'
 
 class Sokoban {
@@ -101,7 +101,7 @@ class Sokoban {
       this.context.font = 'bold 60px sans-serif'
       this.context.fillStyle = colors.success_block.fill
       this.context.fillText('You did it!', 140, 300)
-      appendToLocalStorage("run_outcome", {"game": "soko", "attempt": getAttempts(), "res": "success", "t": Date.now()})
+      appendToLocalStorage("run_outcome", `run_outcome_${getPageId()}_${getAttempts()}`, {"game": "soko", "attempt": getAttempts(), "res": "success", "t": Date.now()})
       // clearLocalStorage()
       this.board = generateGameBoard(this.level)
     }

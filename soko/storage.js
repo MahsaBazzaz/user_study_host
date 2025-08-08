@@ -1,4 +1,4 @@
-export function appendToLocalStorage(key, newEntry) {
+export function appendToLocalStorage(key, global_key, newEntry) {
     
     let existing = localStorage.getItem(key);
     let data = [];
@@ -15,13 +15,13 @@ export function appendToLocalStorage(key, newEntry) {
     data.push(newEntry);
 
     // 3. Save back
-    localStorage.setItem(key, JSON.stringify(data));
-    window.parent.postMessage({ type: "localStorageData", key: key, val: JSON.stringify(data) }, "*");
+    localStorage.setItem(global_key, JSON.stringify(data));
+    window.parent.postMessage({ type: "localStorageData", key: global_key, val: JSON.stringify(data) }, "*");
 }
 
 export function setToLocalStorage(key, newEntry) {
     localStorage.setItem(key, JSON.stringify(newEntry));
-    window.parent.postMessage({ type: "localStorageData", key: key, val: JSON.stringify(newEntry) }, "*");
+    // window.parent.postMessage({ type: "localStorageData", key: global_key, val: JSON.stringify(newEntry) }, "*");
 }
 
 export function readFromLocalStorage(key, newEntry) {

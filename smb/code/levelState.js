@@ -87,16 +87,17 @@ Mario.LevelState.prototype.Enter = function() {
     this.Sprites.Add(Mario.MarioCharacter);
     this.StartTime = 1;
     this.TimeSpent = 0
-    var prev_attempts = readFromLocalStorage("Attempts")
+    Mario.MarioCharacter.PageId = this.PageId
+    var prev_attempts = readFromLocalStorage(`Attempts_${this.PageId}`)
     // console.log(prev_attempts)
     if (prev_attempts != null){
         this.Attempts = parseInt(prev_attempts) + 1
         Mario.MarioCharacter.Attempts = this.Attempts  
-        setToLocalStorage("Attempts", this.Attempts)
+        setToLocalStorage(`Attempts_${this.PageId}`, this.Attempts)
     }
     else{
         this.Attempts = 1
-        setToLocalStorage("Attempts", 1)
+        setToLocalStorage(`Attempts_${this.PageId}`, 1)
         Mario.MarioCharacter.Attempts = this.Attempts  
     }
     
@@ -339,7 +340,7 @@ Mario.LevelState.prototype.Draw = function(context) {
         t = t * t * 0.2;
 
         if (t > 900) {
-            appendToLocalStorage("run_outcome", {"game": "smb", "attempt": this.Attempts, "res" : "success",
+            appendToLocalStorage("run_outcome", `run_outcome_${this.PageId}_${this.Attempts}`, {"game": "smb", "attempt": this.Attempts, "res" : "success",
                  "coins" : Mario.MarioCharacter.Coins, "time" : this.TimeSpent,  "t": Date.now()})
             // clearLocalStorage()
 			this.GotoMapState = true;
@@ -358,7 +359,7 @@ Mario.LevelState.prototype.Draw = function(context) {
             Mario.MarioCharacter.Lives--;
             // this.GotoMapState = true;
 			if (Mario.MarioCharacter.Lives <= 0) {
-                appendToLocalStorage("run_outcome", {"game": "smb", "attempt": this.Attempts, "res" : "fail", 
+                appendToLocalStorage("run_outcome", `run_outcome_${this.PageId}_${this.Attempts}`, {"game": "smb", "attempt": this.Attempts, "res" : "fail", 
                     "coins" : Mario.MarioCharacter.Coins, "time" : this.TimeSpent,  "t": Date.now(), 
                     "pos_x": Mario.MarioCharacter.XDeathPos, "pos_y": Mario.MarioCharacter.YDeathPos})
                 // clearLocalStorage()
@@ -534,7 +535,7 @@ Mario.LevelState.prototype.Save = function() {
 
 Mario.LevelState.prototype.CheckForChange = function(context) {
 	if (this.GotoLoseState) {
-        context.ChangeState(new Mario.LevelState(1, Mario.LevelType.Overground, this.Text));
+        context.ChangeState(new Mario.LevelState(1, Mario.LevelType.Overground, this.Text, this.PageId));
 	}
 	if (this.GotoMapState) {
         context.ChangeState(new Mario.WinState(this.Text));
