@@ -36,8 +36,8 @@ Mario.BackgroundRenderer.prototype.Draw = function(context, camera) {
                     context.drawImage(Enjine.Resources.Images["background"], frame.X, frame.Y, frame.Width, frame.Height, ((x << 5) - xCam) | 0, (y << 5) | 0, frame.Width, frame.Height);
                 }
             catch (e) {
-                    console.warn("Background not loaded, retrying...", e);
-                    context.ChangeState(new Mario.LevelState(1, Mario.LevelType.Overground, this.Text));
+                    console.log("Background not loaded, retrying...", e);
+                    this.Background = Mario.SpriteCuts.GetBackgroundSheet();
             }
         }
     }
