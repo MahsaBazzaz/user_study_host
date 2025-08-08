@@ -37,7 +37,7 @@ Mario.BackgroundRenderer.prototype.Draw = function(context, camera) {
                 }
             catch (e) {
                     console.warn("Background not loaded, retrying...", e);
-                    window.location.reload();
+                    context.ChangeState(new Mario.LevelState(1, Mario.LevelType.Overground, this.Text));
             }
         }
     }
