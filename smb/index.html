@@ -7,8 +7,61 @@
         <link rel="icon" type="image/x-icon" href="../favicon.ico">
 	</head>
 	<body>
-
         <button id ="start">Start</button>
+        
+        <script>
+
+            document.getElementById('start').addEventListener('click', (event) => {
+                let hash = window.location.hash.slice(1)
+                let parts = hash.split("/").filter(p=>p);
+                let pageId = parts[0] || "T17du7pZ";
+
+                // Load the JSON file containing all paragraphs
+                fetch(`smb.json`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok: ' + response.statusText);
+                        }
+                        return response.json();
+                    })
+                    .then(jsonData => {
+                        const data = jsonData[pageId];
+
+                        if (!data) {
+                            throw new Error(`No data found for id: ${pageId}`);
+                        }
+                        
+                        $(document).ready(function() {
+                            new Enjine.Application().Initialize(new Mario.LoadingState(data, pageId), THE_WIDTH, THE_HEIGHT);
+                        });
+                    })
+                    .catch(error => {
+                        console.log('Error loading level data: ' + error);
+                    });
+
+            })
+        </script>
+        <style>
+            button {
+            margin: 5px;
+            display: block;
+            background: #4ccd5a;
+            border: 1px solid #4ccd5a;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            font-size: 1rem;
+            }
+
+            button:hover {
+            background: #3ca448;
+            }
+
+            button:active {
+            transform: scale(0.9);
+            }
+        </style>
+
+        
     
 		<canvas id="canvas" width="640" height="480">
 			<p>Your browser does not support the canvas element.</p>
@@ -65,56 +118,6 @@
 
         <script src="code/music.js"></script>
 
-        <script>
-
-            document.getElementById('start').addEventListener('click', (event) => {
-                let hash = window.location.hash.slice(1)
-                let parts = hash.split("/").filter(p=>p);
-                let pageId = parts[0] || "T17du7pZ";
-
-                // Load the JSON file containing all paragraphs
-                fetch(`smb.json`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok: ' + response.statusText);
-                        }
-                        return response.json();
-                    })
-                    .then(jsonData => {
-                        const data = jsonData[pageId];
-
-                        if (!data) {
-                            throw new Error(`No data found for id: ${pageId}`);
-                        }
-                        
-                        $(document).ready(function() {
-                            new Enjine.Application().Initialize(new Mario.LoadingState(data, pageId), THE_WIDTH, THE_HEIGHT);
-                        });
-                    })
-                    .catch(error => {
-                        console.log('Error loading level data: ' + error);
-                    });
-
-            })
-        </script>
-        <style>
-            button {
-            margin: 5px;
-            display: block;
-            background: #4ccd5a;
-            border: 1px solid #4ccd5a;
-            padding: 0.5rem 1rem;
-            font-weight: 600;
-            font-size: 1rem;
-            }
-
-            button:hover {
-            background: #3ca448;
-            }
-
-            button:active {
-            transform: scale(0.9);
-            }
-        </style>
+        
 </body>
 </html>
