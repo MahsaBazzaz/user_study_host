@@ -194,7 +194,7 @@ Mario.Character.prototype.Move = function() {
     }
     
     if (Enjine.KeyboardInput.IsKeyDown(Enjine.Keys.Space) || (this.JumpTime < 0 && !this.OnGround && !this.Sliding)) {
-        appendToLocalStorage("key_log", `key_log_${this.PageId}_${this.Attempts}`, {"game": "smb", "attempt": this.Attempts, "key": "jump", "t": Date.now()})
+        
 
         if (this.JumpTime < 0) {
             this.Xa = this.XJumpSpeed;
@@ -211,6 +211,7 @@ Mario.Character.prototype.Move = function() {
             this.Sliding = false;
         } else if (this.Sliding && this.MayJump) {
             Enjine.Resources.PlaySound("jump");
+            appendToLocalStorage("key_log", `key_log_${this.PageId}_${this.Attempts}`, {"game": "smb", "attempt": this.Attempts, "key": "jump", "t": Date.now()})
             this.XJumpSpeed = -this.Facing * 6;
             // this.YJumpSpeed = -2;
             this.YJumpSpeed = -2.1;
