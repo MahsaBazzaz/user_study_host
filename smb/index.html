@@ -8,7 +8,7 @@
 	</head>
 	<body>
         <button id ="start">Start</button>
-        
+
         <script>
 
             document.getElementById('start').addEventListener('click', (event) => {
@@ -31,9 +31,9 @@
                             throw new Error(`No data found for id: ${pageId}`);
                         }
                         
-                        $(document).ready(function() {
-                            new Enjine.Application().Initialize(new Mario.LoadingState(data, pageId), THE_WIDTH, THE_HEIGHT);
-                        });
+                        
+                        new Enjine.Application().Initialize(new Mario.LoadingState(data, pageId), THE_WIDTH, THE_HEIGHT);
+                        event.target.remove(); // removes the clicked button
                     })
                     .catch(error => {
                         console.log('Error loading level data: ' + error);
