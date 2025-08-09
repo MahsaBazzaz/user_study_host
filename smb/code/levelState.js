@@ -496,7 +496,7 @@ Mario.LevelState.prototype.BumpInto = function(x, y) {
 Mario.LevelState.prototype.Save = function() {
     console.log("trying to save")
     var tileSize = 16;
-    var fullWidth = 100 * tileSize;
+    var fullWidth = 200 * tileSize;
     var fullHeight = 14 * tileSize;
 
     var bufferCanvas = document.createElement("canvas");
@@ -505,7 +505,7 @@ Mario.LevelState.prototype.Save = function() {
     var context = bufferCanvas.getContext("2d");
     var fullCamera = { X: 0, Width: fullWidth , Height : fullHeight};
 
-    var patchSize = 40 * tileSize;  // width of each chunk
+    var patchSize = 8 * tileSize;  // width of each chunk
     var chunkCount = Math.ceil(fullWidth / patchSize);
     console.log(chunkCount)
     var fullCamera = { X: 0, Width: patchSize, Height: fullHeight };

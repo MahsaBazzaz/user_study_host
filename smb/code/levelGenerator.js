@@ -109,7 +109,7 @@ Mario.LevelGenerator.prototype.CreateLevel = function() {
                 level.SetBlock(x , y +1, 6 * 16 + 3);
             }
             else if (char == "}"){
-                level.ExitX = x;
+                level.ExitX = x + 1;
                 level.ExitY = y + 1;
             }
         }
