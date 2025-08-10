@@ -204,7 +204,7 @@ Mario.Character.prototype.Move = function() {
             Enjine.Resources.PlaySound("jump");
             this.XJumpSpeed = 0;
             // this.YJumpSpeed = -1.9;
-            this.YJumpSpeed = -2;
+            this.YJumpSpeed = -2.1;
             this.JumpTime = 7;
             this.Ya = this.JumpTime * this.YJumpSpeed;
             this.OnGround = false;
