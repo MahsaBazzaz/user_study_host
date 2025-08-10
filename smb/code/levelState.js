@@ -104,6 +104,18 @@ Mario.LevelState.prototype.Enter = function() {
 	this.GotoMapState = false;
 	this.GotoLoseState = false;
     // this.Save()
+
+    const canvas = document.getElementById("canvas");
+    canvas.addEventListener("blur", () => 
+    {
+        console.log("Canvas lost focus")
+        this.Paused = true
+    });
+
+    canvas.addEventListener("focus", () => {
+        console.log("Canvas focused")
+        this.Paused = false
+    });
 };
 
 Mario.LevelState.prototype.Exit = function() {
