@@ -10,10 +10,14 @@
     <header>
     </header>
     <button id ="start">Start</button>
-    <canvas style="margin: 5px;"></canvas>
+    <canvas id="sokocanvas" style="margin: 5px;"></canvas>
     <button id ="restart" style="display: none;">Restart</button>
   </body>
-
+  <script>
+    const canvas = document.getElementById("sokocanvas");
+    canvas.setAttribute("tabindex", "0");
+    
+  </script>
   <script type="module" src="constants.js"></script>
   <script type="module" src="utils.js"></script>
   <script type="module" src="Sokoban.js"></script>

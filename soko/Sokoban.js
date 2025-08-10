@@ -39,10 +39,25 @@ class Sokoban {
     this.context = this.canvas.getContext('2d')
     this.context.fillStyle = colors.empty
     this.context.fillRect(0, 0, size.width, size.height)
-
+    this.Paused = false
     this.level = level
     this.levelOneMap = generateGameBoardOg(level)
     this.board = generateGameBoard(level)
+
+    const canvas = document.getElementById("sokocanvas");
+    canvas.focus();
+    canvas.addEventListener("blur", () => 
+    {
+        console.log("level paused")
+        this.Paused = true
+        this.render()
+    });
+
+    canvas.addEventListener("focus", () => {
+        console.log("level resumed")
+        this.Paused = false
+        this.render()
+    });
 
   }
 
@@ -94,6 +109,17 @@ class Sokoban {
 
     const rowsWithSuccess = this.board.filter((row) => row.some((entry) => entry === SUCCESS_BLOCK))
     const isWin = rowsWithVoid.length === 0
+
+    if(this.Paused){
+      this.context.font = 'bold 18px sans-serif'
+      this.context.fillStyle = '#111'
+      const text1Width = this.context.measureText('PAUSED').width;
+      const text2Width = this.context.measureText('click to continue').width;
+
+      // Draw text centered horizontally
+      this.context.fillText('PAUSED', (this.canvas.width - text1Width) / 2, this.canvas.height / 2 - 10);
+      this.context.fillText('click to continue', (this.canvas.width - text2Width) / 2, this.canvas.height / 2 + 15);
+    }
 
     if (isWin) {
       // A winner is you
@@ -174,7 +200,8 @@ class Sokoban {
   }
 
   move(playerCoords, direction) {
-    const { x, y, above, below, sideLeft, sideRight } = playerCoords
+    if (!this.Paused){
+      const { x, y, above, below, sideLeft, sideRight } = playerCoords
 
     const adjacentCell = {
       [directions.up]: above,
@@ -183,12 +210,9 @@ class Sokoban {
       [directions.right]: sideRight,
     }
 
-    if (isTraversible(adjacentCell[direction])) {
-      this.movePlayer(playerCoords, direction)
-    }
+    if (isTraversible(adjacentCell[direction])) {this.movePlayer(playerCoords, direction)}
 
-    if (isBlock(adjacentCell[direction])) {
-      this.movePlayerAndBoxes(playerCoords, direction)
+    if (isBlock(adjacentCell[direction])) {this.movePlayerAndBoxes(playerCoords, direction)}
     }
   }
 }
