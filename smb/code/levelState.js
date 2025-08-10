@@ -341,7 +341,7 @@ Mario.LevelState.prototype.Draw = function(context) {
     // }
     // this.DrawStringShadow(context, " " + time, 34, 1);
 
-    if (this.Paused){
+    if (this.Paused && Mario.MarioCharacter.DeathTime <= 0){
         this.DrawStringShadow(context, "PAUSED", 14, 15);
         this.DrawStringShadow(context, "click to continue", 8, 17);
     }
