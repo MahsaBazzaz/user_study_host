@@ -106,6 +106,7 @@ Mario.LevelState.prototype.Enter = function() {
     // this.Save()
 
     const canvas = document.getElementById("canvas");
+    canvas.setAttribute("tabindex", "0");
     canvas.addEventListener("blur", () => 
     {
         console.log("Canvas lost focus")
