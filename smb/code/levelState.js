@@ -106,15 +106,15 @@ Mario.LevelState.prototype.Enter = function() {
     // this.Save()
 
     const canvas = document.getElementById("canvas");
-    canvas.setAttribute("tabindex", "0");
+    
     canvas.addEventListener("blur", () => 
     {
-        console.log("Canvas lost focus")
+        // console.log("level paused")
         this.Paused = true
     });
 
     canvas.addEventListener("focus", () => {
-        console.log("Canvas focused")
+        // console.log("level resumed")
         this.Paused = false
     });
 };
@@ -340,6 +340,11 @@ Mario.LevelState.prototype.Draw = function(context) {
     //     time = 0;
     // }
     // this.DrawStringShadow(context, " " + time, 34, 1);
+
+    if (this.Paused){
+        this.DrawStringShadow(context, "PAUSED", 14, 15);
+        this.DrawStringShadow(context, "click to continue", 8, 17);
+    }
 
     if (this.StartTime > 0) {
         t = this.StartTime + this.Delta - 1;

@@ -150,4 +150,6 @@ Mario.LoadingState.prototype.Draw = function(context) {
 Mario.LoadingState.prototype.CheckForChange = function(context) {
     context.ChangeState(new Mario.TitleState());
     context.ChangeState(new Mario.LevelState(1, Mario.LevelType.Overground, this.Text, this.PageId));
+    const canvas = document.getElementById("canvas");
+    canvas.focus();
 };
