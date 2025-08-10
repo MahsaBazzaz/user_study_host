@@ -31,22 +31,28 @@ Mario.LevelGenerator.prototype.CreateLevel = function() {
             x = col
             y = row
             // console.log(char + " " + x + "/" + this.Width + " , " + y + "/" + this.Height)
-            if (char == "X" && y != this.Height - 2){
+                        if (char == "X" && y != this.Height - 2){
                 
-                if (rows[row][col-1] != "X"){
-                    level.SetBlock(x, y, 8 * 16 + 4);
+                if (rows[row][col-1] != "X" && rows[row][col+1] != "X"){
+                    level.SetBlock(x, y, 12 * 16 + 4);
+                }
+                else if (rows[row][col-1] != "X"){
+                    level.SetBlock(x, y, 12 * 16 + 1);
                 }
                 else if (rows[row][col+1] != "X"){
-                    level.SetBlock(x, y, 8 * 16 + 6);
+                    level.SetBlock(x, y, 12 * 16 + 2);
                 }
                 else {
-                    level.SetBlock(x, y, 8 * 16 + 5);
+                    level.SetBlock(x, y, 12 * 16 + 3);
                 }
             }
 
             if (char == "X" && y == this.Height - 2){
-                
-                if (rows[row][col-1] != "X"){
+                if (rows[row][col-1] != "X" && rows[row][col+1] != "X"){
+                    level.SetBlock(x, y, 12 * 16 + 0);
+                    level.SetBlock(x, this.Height - 1, 12 * 16 + 5); 
+                }
+                else if (rows[row][col-1] != "X"){
                     level.SetBlock(x, y, 8 * 16 + 4);
                     level.SetBlock(x, this.Height - 1, 10 * 16 + 4); 
                 }
@@ -59,11 +65,19 @@ Mario.LevelGenerator.prototype.CreateLevel = function() {
                     level.SetBlock(x, this.Height - 1, 10 * 16 + 5); 
                 }
             }
-            else if (char == "<"){
+            else if (char == "<" && y != this.Height - 2){
                 level.SetBlock(x, y, 0 * 16 + 10);
             }
-            else if (char == ">"){
+            else if (char == ">" && y != this.Height - 2){
                 level.SetBlock(x, y, 0 * 16 + 11);
+            }
+            else if (char == "<" && y == this.Height - 2){
+                level.SetBlock(x, y, 0 * 16 + 10);
+                level.SetBlock(x, this.Height - 1, 1 * 16 + 10); 
+            }
+            else if (char == ">" && y == this.Height - 2){
+                level.SetBlock(x, y, 0 * 16 + 11);
+                level.SetBlock(x, this.Height - 1, 1 * 16 + 11); 
             }
             else if (char == "["){
                 level.SetBlock(x, y, 1 * 16 + 10);
