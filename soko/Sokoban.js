@@ -25,11 +25,12 @@ import {
 
 import {getAttempts, getPageId} from './script.js'
 import {appendToLocalStorage, clearLocalStorage} from './storage.js'
+let size;
 
 class Sokoban {
   constructor(level, width, height) {
     // console.log(width,height)
-    let size = { width : width, height : height}
+    size = { width : width, height : height}
     this.canvas = document.querySelector('canvas')
     this.canvas.width = size.width
     this.canvas.height = size.height
@@ -98,9 +99,9 @@ class Sokoban {
       // A winner is you
       this.context.fillStyle = '#111'
       this.context.fillRect(0, 0, size.width, size.height)
-      this.context.font = 'bold 60px sans-serif'
+      this.context.font = 'bold 40px sans-serif'
       this.context.fillStyle = colors.success_block.fill
-      this.context.fillText('You did it!', 140, 300)
+      this.context.fillText('You did it!', 130, 250)
       appendToLocalStorage("run_outcome", `run_outcome_${getPageId()}_${getAttempts()}`, {"game": "soko", "attempt": getAttempts(), "res": "success", "t": Date.now()})
       // clearLocalStorage()
       this.board = generateGameBoard(this.level)
