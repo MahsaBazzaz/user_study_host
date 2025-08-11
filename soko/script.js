@@ -1,6 +1,6 @@
 import { directions, keys, multiplier } from './constants.js'
 import Sokoban from './Sokoban.js'
-import {appendToLocalStorage, readFromLocalStorage, setToLocalStorage, clearLocalStorage} from './storage.js'
+import {appendToLocalStorage, readFromLocalStorage, setToLocalStorage, updateLocalStorage, justsendtoparent} from './storage.js'
 
 // init
 let sokoban
@@ -25,28 +25,32 @@ document.addEventListener('keydown', (event) => {
       event.preventDefault();
       event.stopPropagation();
       sokoban.move(playerCoords, directions.up)
-      appendToLocalStorage("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "up",  "t": Date.now()})
+      justsendtoparent("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "up",  "t": Date.now()})
+      updateLocalStorage("key_count", `key_count_up_${PageId}_${Attempts}`)
       break
     case keys.down:
     case keys.s:
       event.preventDefault();
       event.stopPropagation();
       sokoban.move(playerCoords, directions.down)
-      appendToLocalStorage("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "down",  "t": Date.now()})
+      justsendtoparent("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "down",  "t": Date.now()})
+      updateLocalStorage("key_count", `key_count_down_${PageId}_${Attempts}`)
       break
     case keys.left:
     case keys.a:
       event.preventDefault();
       event.stopPropagation();
       sokoban.move(playerCoords, directions.left)
-      appendToLocalStorage("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "left",  "t": Date.now()})
+      justsendtoparent("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "left",  "t": Date.now()})
+      updateLocalStorage("key_count", `key_count_left_${PageId}_${Attempts}`)
       break
     case keys.right:
     case keys.d:
       event.preventDefault();
       event.stopPropagation();
       sokoban.move(playerCoords, directions.right)
-      appendToLocalStorage("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "right",  "t": Date.now()})
+      justsendtoparent("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "right",  "t": Date.now()})
+      updateLocalStorage("key_count", `key_count_right_${PageId}_${Attempts}`)
       break
     default:
   }

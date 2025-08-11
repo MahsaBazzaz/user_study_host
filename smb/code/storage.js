@@ -24,11 +24,24 @@ function setToLocalStorage(key, newEntry) {
     // window.parent.postMessage({ type: "localStorageData",  key: global_key, val: JSON.stringify(newEntry) }, "*");
 }
 
+function justsendtoparent(key, global_key, newEntry) {
+    window.parent.postMessage({ type: "log", key: global_key, val: newEntry }, "*");
+}
+
+function updateLocalStorage(key, global_key) {
+    let existing = parseInt(localStorage.getItem(key), 10) || 0;
+    existing += 1
+    localStorage.setItem(key, existing);
+    
+    // Optional postMessage
+    window.parent.postMessage({ type: "localStorageData", key: global_key, val: existing }, "*");
+}
+
 function readFromLocalStorage(key, newEntry) {
     return localStorage.getItem(key);
 }
 
 function clearLocalStorage(){
     localStorage.removeItem("run_outcome");
-    localStorage.removeItem("key_log");
+    localStorage.removeItem("key_count");
 }

@@ -202,6 +202,8 @@ Mario.Character.prototype.Move = function() {
             this.JumpTime++;
         } else if (this.OnGround && this.MayJump) {
             Enjine.Resources.PlaySound("jump");
+            justsendtoparent("key_log", `key_log_${this.PageId}_${this.Attempts}`, {"game": "smb", "attempt": this.Attempts, "key": "jump", "t": Date.now()})
+            updateLocalStorage("key_count", `key_count_jump_${this.PageId}_${this.Attempts}`)
             this.XJumpSpeed = 0;
             // this.YJumpSpeed = -1.9;
             this.YJumpSpeed = -2.1;
@@ -211,7 +213,8 @@ Mario.Character.prototype.Move = function() {
             this.Sliding = false;
         } else if (this.Sliding && this.MayJump) {
             Enjine.Resources.PlaySound("jump");
-            appendToLocalStorage("key_log", `key_log_${this.PageId}_${this.Attempts}`, {"game": "smb", "attempt": this.Attempts, "key": "jump", "t": Date.now()})
+            justsendtoparent("key_log", `key_log_${this.PageId}_${this.Attempts}`, {"game": "smb", "attempt": this.Attempts, "key": "jump", "t": Date.now()})
+            updateLocalStorage("key_count", `key_count_jump_${this.PageId}_${this.Attempts}`)
             this.XJumpSpeed = -this.Facing * 6;
             // this.YJumpSpeed = -2;
             this.YJumpSpeed = -2.1;

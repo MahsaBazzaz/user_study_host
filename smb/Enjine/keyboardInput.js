@@ -68,11 +68,5 @@ Enjine.KeyboardInput = {
         if(event.keyCode >= 32 && event.keyCode <= 80){
             event.preventDefault();
         }
-    },
-
-    LogInteraction: function(event, attempt) {
-        if (event.keyCode == Enjine.Keys.Space){
-            appendToLocalStorage("key_log", {"game": "smb", "attempt": attempt, "t": Date.now()})
-        }
     }
 };

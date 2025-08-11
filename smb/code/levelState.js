@@ -554,8 +554,12 @@ Mario.LevelState.prototype.Save = function() {
 Mario.LevelState.prototype.CheckForChange = function(context) {
 	if (this.GotoLoseState) {
         context.ChangeState(new Mario.LevelState(1, Mario.LevelType.Overground, this.Text, this.PageId));
+        const canvas = document.getElementById("canvas");
+        canvas.focus();
 	}
 	if (this.GotoMapState) {
         context.ChangeState(new Mario.WinState(this.Text));
+        const canvas = document.getElementById("canvas");
+        canvas.focus();
 	}
 };

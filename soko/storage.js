@@ -19,6 +19,19 @@ export function appendToLocalStorage(key, global_key, newEntry) {
     window.parent.postMessage({ type: "localStorageData", key: global_key, val: JSON.stringify(data) }, "*");
 }
 
+export function justsendtoparent(key, global_key, newEntry) {
+    window.parent.postMessage({ type: "log", key: global_key, val: newEntry }, "*");
+}
+
+export function updateLocalStorage(key, global_key) {
+    let existing = parseInt(localStorage.getItem(key), 10) || 0;
+    existing += 1
+    localStorage.setItem(key, existing);
+    
+    // Optional postMessage
+    window.parent.postMessage({ type: "localStorageData", key: global_key, val: existing }, "*");
+}
+
 export function setToLocalStorage(key, newEntry) {
     localStorage.setItem(key, JSON.stringify(newEntry));
     // window.parent.postMessage({ type: "localStorageData", key: global_key, val: JSON.stringify(newEntry) }, "*");
@@ -30,5 +43,5 @@ export function readFromLocalStorage(key, newEntry) {
 
 export function clearLocalStorage(){
     localStorage.removeItem("run_outcome");
-    localStorage.removeItem("key_log");
+    localStorage.removeItem("key_count");
 }
