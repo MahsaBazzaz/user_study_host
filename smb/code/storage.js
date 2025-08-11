@@ -29,9 +29,9 @@ function justsendtoparent(key, global_key, newEntry) {
 }
 
 function updateLocalStorage(key, global_key) {
-    let existing = parseInt(localStorage.getItem(key), 10) || 0;
+    let existing = parseInt(localStorage.getItem(global_key), 10) || 0;
     existing += 1
-    localStorage.setItem(key, existing);
+    localStorage.setItem(global_key, existing);
     
     // Optional postMessage
     window.parent.postMessage({ type: "localStorageData", key: global_key, val: existing }, "*");
@@ -43,5 +43,11 @@ function readFromLocalStorage(key, newEntry) {
 
 function clearLocalStorage(){
     localStorage.removeItem("run_outcome");
-    localStorage.removeItem("key_count");
+    for (let i = 0; i < localStorage.length; i++) {
+    let key = localStorage.key(i);
+    if (key.startsWith("key_count")) {
+        localStorage.removeItem(key);
+        i--; // adjust index since length changes after removal
+    }
+}
 }
