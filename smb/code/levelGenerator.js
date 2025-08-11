@@ -89,21 +89,21 @@ Mario.LevelGenerator.prototype.CreateLevel = function() {
                 level.SetBlock(x, y, 1 * 16 + 12);
             }
             else if (char == "E"){
-                if (row < rows.length -1){
-                    if (rows[row+1][col] == "<") {
+                if (row+1 <= rows.length -1 && rows[row+1][col] == "<") {
                     level.SetSpriteTemplate(x, y, new Mario.SpriteTemplate(Mario.Enemy.Flower, false));
                 }
-                else if (rows[row+1][col] == ">") {
+                else if (row+1 <= rows.length -1 && rows[row+1][col] == ">") {
                     level.SetSpriteTemplate(x - 1, y, new Mario.SpriteTemplate(Mario.Enemy.Flower, false));
                 }
-                else if (rows[row+1][col] == "-" || rows[row+1][col] == "-"){
-                    level.SetSpriteTemplate(x - 1, y, new Mario.SpriteTemplate(Mario.Enemy.GreenKoopa, true));
-                }
+                else if (row+1 <= rows.length -1 && rows[row+1][col] == "-" || rows[row+1][col] == "-"){
+                    let randomBit = Math.round(Math.random());
+                    if (randomBit == 0){ level.SetSpriteTemplate(x - 1, y, new Mario.SpriteTemplate(Mario.Enemy.GreenKoopa, true)); }
+                    if (randomBit == 1){ level.SetSpriteTemplate(x - 1, y, new Mario.SpriteTemplate(Mario.Enemy.RedKoopa, true)); }
+                    
                 }
                 else{
                     level.SetSpriteTemplate(x, y, new Mario.SpriteTemplate(Mario.Enemy.Goomba, false));
                 }
-
             }
             else if (char == "H"){
                 level.SetBlock(x, y, 0 * 16 + 12);
