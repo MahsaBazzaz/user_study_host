@@ -9,14 +9,35 @@
   <body>
     <header>
     </header>
-    <button id ="start">Start</button>
+    
+    <div>
+      
+      <button id ="restart" style="display: none;">restart</button>
+      <button id ="sound" style="display: none;">mute</button>
+      <button id ="start">Start</button>
+  </div>
     <canvas id="sokocanvas" style="margin: 5px;"></canvas>
-    <button id ="restart" style="display: none;">Restart</button>
+   
   </body>
   <script>
     const canvas = document.getElementById("sokocanvas");
     canvas.setAttribute("tabindex", "0");
     
+    const sound_button = document.getElementById('sound')
+    sound_button.addEventListener('click', (event) => {
+        var prev_sound = localStorage.getItem("mute") === "true";
+        var new_sound = !prev_sound;
+        localStorage.setItem("mute", new_sound);
+
+        if (new_sound == true) {
+            sound_button.style.backgroundColor = "gray";
+            sound_button.textContent = "unmute";
+        } else {
+            // Activate
+            sound_button.textContent = "mute";
+        }
+
+    })
   </script>
   <script type="module" src="constants.js"></script>
   <script type="module" src="utils.js"></script>

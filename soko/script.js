@@ -59,6 +59,8 @@ document.getElementById('restart').addEventListener('click', (event) => {
   Attempts += 1
   setToLocalStorage(`Attempts_${PageId}`, Attempts)
   // clearLocalStorage()
+  const canvas = document.getElementById("sokocanvas");
+  canvas.focus();
   sokoban.render({ restart: true })
 })
 
@@ -78,7 +80,8 @@ document.getElementById('start').addEventListener('click', (event) => {
   }
   appendToLocalStorage("run_outcome", `run_outcome_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "res": "start", "t": Date.now()})
   event.target.remove(); // removes the clicked button
-  document.getElementById('restart').style.display = 'block';
+  document.getElementById('restart').style.display = 'inline-block';
+  document.getElementById('sound').style.display = 'inline-block';
   window.parent.postMessage({ type: "message",  action: "start", id : PageId }, "*");
 
   fetch(`soko.json`)

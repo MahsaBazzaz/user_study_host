@@ -9,7 +9,10 @@ export const isVoid = (cell) => [VOID, SUCCESS_BLOCK].includes(cell)
 export const sound = new Audio("move.ogg")
 
 export const PlaySound = (name, loop) => {
-    	sound.play();
+  var setting = localStorage.getItem("mute") === "true"
+  if (setting === false){
+      sound.play();
+  }
 }
     
 export const getX = (x, direction, spaces = 1) => {

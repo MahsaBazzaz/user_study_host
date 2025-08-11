@@ -28,23 +28,41 @@ p {
   font-size: 1.3rem;
 }
 
+
 button {
-  margin: 5px;
-  display: block;
-  background: #4ccd5a;
-  border: 1px solid #4ccd5a;
-  padding: 0.5rem 1rem;
-  font-weight: 600;
+  margin-right: 5px;
+  margin-left: 2px;
+  margin-top: 2px;
+  margin-bottom: 4px;
+  display: inline-block;
+  background: #d51b2c; /* base red */
+  border: 3px solid #000000; /* chunky border */
+  padding: 0.5rem 0.5rem;
+  font-weight: bold;
   font-size: 1rem;
+  width: 80px;
+  font-family: 'Press Start 2P', monospace; /* retro pixel font */
+  color: #fff;
+  text-shadow: 2px 2px #000;
+  box-shadow: 3px 3px 0px #000; /* blocky shadow */
+  cursor: pointer;
+  transition: all 0.1s ease;
 }
 
+/* hover effect - bright flash */
 button:hover {
-  background: #3ca448;
+  background: #ff2e43;
+  box-shadow: 2px 2px 0px #000;
+  transform: translate(1px, 1px);
 }
 
+/* pressed effect */
 button:active {
-  transform: scale(0.9);
+  background: #aa1422;
+  box-shadow: none;
+  transform: translate(3px, 3px);
 }
+
 
 header {
   margin-right: 1rem;

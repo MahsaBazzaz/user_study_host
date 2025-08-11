@@ -68,7 +68,9 @@ Enjine.Resources = {
     },
     
     PlaySound: function(name, loop) {
-    	if (this.Sounds[name].index >= this.Sounds[name].length) {
+        var setting = localStorage.getItem("mute") === "true"
+        if (setting === false){
+            if (this.Sounds[name].index >= this.Sounds[name].length) {
     		this.Sounds[name].index = 0;	
     	}
     	if (loop) {
@@ -76,6 +78,7 @@ Enjine.Resources = {
     	}
     	this.Sounds[name][this.Sounds[name].index++].play();
     	return this.Sounds[name].index;
+        }
     },
     
     PauseChannel: function(name, index) {
