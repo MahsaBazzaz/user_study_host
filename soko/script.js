@@ -4,7 +4,7 @@ import {appendToLocalStorage, readFromLocalStorage, setToLocalStorage, updateLoc
 
 // init
 let sokoban
-let Attempts = 0
+let Attempts = 1
 let PageId = ""
 export function getAttempts() {
     return Attempts;
@@ -61,7 +61,7 @@ document.addEventListener('keydown', (event) => {
 document.getElementById('restart').addEventListener('click', (event) => {
   appendToLocalStorage("run_outcome", `run_outcome_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "res": "reset", "t": Date.now()})
   Attempts += 1
-  setToLocalStorage(`Attempts_${PageId}`, Attempts)
+  // setToLocalStorage(`Attempts_${PageId}`, Attempts)
   // clearLocalStorage()
   const canvas = document.getElementById("sokocanvas");
   canvas.focus();
@@ -72,16 +72,16 @@ document.getElementById('start').addEventListener('click', (event) => {
   const hash = window.location.hash
   console.log(hash)
   PageId = hash.replace('#', '') || "8Ua6YU1D";
-  console.log(PageId)
-  var prev_attempts = readFromLocalStorage(`Attempts_${PageId}`)
-  if (prev_attempts != null){
-      Attempts = parseInt(prev_attempts) + 1
-      setToLocalStorage(`Attempts_${PageId}`, Attempts)
-  }
-  else{
-      Attempts = 1
-      setToLocalStorage(`Attempts_${PageId}`, 1)
-  }
+  Attempts = 1
+  // var prev_attempts = readFromLocalStorage(`Attempts_${PageId}`)
+  // if (prev_attempts != null){
+  //     Attempts = parseInt(prev_attempts) + 1
+  //     setToLocalStorage(`Attempts_${PageId}`, Attempts)
+  // }
+  // else{
+  //     Attempts = 1
+  //     setToLocalStorage(`Attempts_${PageId}`, 1)
+  // }
   appendToLocalStorage("run_outcome", `run_outcome_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "res": "start", "t": Date.now()})
   event.target.remove(); // removes the clicked button
   document.getElementById('restart').style.display = 'inline-block';
