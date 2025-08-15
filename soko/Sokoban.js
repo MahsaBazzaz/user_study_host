@@ -53,13 +53,13 @@ class Sokoban {
     canvas.focus();
     canvas.addEventListener("blur", () => 
     {
-        console.log("level paused")
+        // console.log("level paused")
         this.Paused = true
         this.render()
     });
 
     canvas.addEventListener("focus", () => {
-        console.log("level resumed")
+        // console.log("level resumed")
         this.Paused = false
         this.render()
     });
