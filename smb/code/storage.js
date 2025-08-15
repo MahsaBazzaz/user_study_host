@@ -15,7 +15,7 @@ function appendToLocalStorage(key, global_key, newEntry) {
     data.push(newEntry);
 
     // 3. Save back
-    localStorage.setItem(global_key, JSON.stringify(data));
+    // localStorage.setItem(global_key, JSON.stringify(data));
     window.parent.postMessage({ type: "localStorageData", key: global_key, val: JSON.stringify(data) }, "*");
 }
 
@@ -39,6 +39,15 @@ function updateLocalStorage(key, global_key) {
 
 function readFromLocalStorage(key, newEntry) {
     return localStorage.getItem(key);
+}
+
+function removeEndingFromLocalStorage() {
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+    const key = localStorage.key(i);
+    if (key && key.endsWith("key")) {
+        localStorage.removeItem(key);
+    }
+}
 }
 
 function clearLocalStorage(){

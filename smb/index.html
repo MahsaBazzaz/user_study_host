@@ -35,7 +35,7 @@
                         }
                         
                         window.parent.postMessage({ type: "message",  action: "start", id: pageId }, "*");
-                        new Enjine.Application().Initialize(new Mario.LoadingState(data, pageId), THE_WIDTH, THE_HEIGHT);
+                        new Enjine.Application().Initialize(new Mario.LoadingState(data, pageId, 1), THE_WIDTH, THE_HEIGHT);
                         event.target.remove(); // removes the clicked button
                         document.getElementById('sound').style.display = 'inline-block';
                     })

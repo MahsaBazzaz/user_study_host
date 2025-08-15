@@ -3,7 +3,7 @@
 	Code by Rob Kleffner, 2011
 */
 
-Mario.LoadingState = function(text, pageId) {
+Mario.LoadingState = function(text, pageId, Attempts) {
     this.Images = [];
     this.ImagesLoaded = false;
     this.ScreenColor = 0;
@@ -12,6 +12,7 @@ Mario.LoadingState = function(text, pageId) {
     this.SoundIndex = 0;
     this.Text = text
     this.PageId = pageId
+    this.Attempts = Attempts
     // console.log("I am loading, this is what I've got: " + text)
 };
 
@@ -149,7 +150,7 @@ Mario.LoadingState.prototype.Draw = function(context) {
 // Mario.LoadingState.prototype.Update     = function() {};
 Mario.LoadingState.prototype.CheckForChange = function(context) {
     context.ChangeState(new Mario.TitleState());
-    context.ChangeState(new Mario.LevelState(1, Mario.LevelType.Overground, this.Text, this.PageId));
+    context.ChangeState(new Mario.LevelState(1, Mario.LevelType.Overground, this.Text, this.PageId, this.Attempts));
     const canvas = document.getElementById("canvas");
     canvas.focus();
 };

@@ -4,12 +4,12 @@
 */
 // game.js or other script
 
-Mario.LevelState = function(difficulty, type, text, pageId) {
+Mario.LevelState = function(difficulty, type, text, pageId, Attempts) {
     this.LevelDifficulty = difficulty;
     this.LevelType = type;
     this.Text = text
     this.PageId = pageId
-    this.Attempts = 0
+    this.Attempts = Attempts
 
     // console.log("I am state, this is what I've got: " + text)
     
@@ -88,19 +88,11 @@ Mario.LevelState.prototype.Enter = function() {
     this.StartTime = 1;
     this.TimeSpent = 0
     Mario.MarioCharacter.PageId = this.PageId
-    var prev_attempts = readFromLocalStorage(`Attempts_${this.PageId}`)
-    // console.log(prev_attempts)
-    if (prev_attempts != null){
-        this.Attempts = parseInt(prev_attempts) + 1
-        Mario.MarioCharacter.Attempts = this.Attempts  
-        setToLocalStorage(`Attempts_${this.PageId}`, this.Attempts)
-    }
-    else{
-        this.Attempts = 1
-        setToLocalStorage(`Attempts_${this.PageId}`, 1)
-        Mario.MarioCharacter.Attempts = this.Attempts  
-    }
+    Mario.MarioCharacter.Attempts = this.Attempts 
+
+    // removeEndingFromLocalStorage(`${this.PageId}_${this.Attempts}`) TODO
     
+
 	this.GotoMapState = false;
 	this.GotoLoseState = false;
     // this.Save()
@@ -553,7 +545,7 @@ Mario.LevelState.prototype.Save = function() {
 
 Mario.LevelState.prototype.CheckForChange = function(context) {
 	if (this.GotoLoseState) {
-        context.ChangeState(new Mario.LevelState(1, Mario.LevelType.Overground, this.Text, this.PageId));
+        context.ChangeState(new Mario.LevelState(1, Mario.LevelType.Overground, this.Text, this.PageId, this.Attempts+1));
         const canvas = document.getElementById("canvas");
         canvas.focus();
 	}

@@ -15,7 +15,7 @@ export function appendToLocalStorage(key, global_key, newEntry) {
     data.push(newEntry);
 
     // 3. Save back
-    localStorage.setItem(global_key, JSON.stringify(data));
+    // localStorage.setItem(global_key, JSON.stringify(data));
     window.parent.postMessage({ type: "localStorageData", key: global_key, val: JSON.stringify(data) }, "*");
 }
 
