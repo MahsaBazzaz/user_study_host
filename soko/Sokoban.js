@@ -23,9 +23,14 @@ import {
   PlaySound
 } from './utils.js'
 
-import {getAttempts, getPageId} from './script.js'
-import {appendToLocalStorage, clearLocalStorage} from './storage.js'
+import {getAttempts, getPageId, getCount_down, getCount_left, getCount_right, getCount_up} from './script.js'
 let size;
+let targets_left;
+
+export function getTargetsLeft() {
+    return targets_left;
+}
+
 
 class Sokoban {
   constructor(level, width, height) {
@@ -108,6 +113,7 @@ class Sokoban {
     }
 
     const rowsWithSuccess = this.board.filter((row) => row.some((entry) => entry === SUCCESS_BLOCK))
+    targets_left = rowsWithVoid.length
     const isWin = rowsWithVoid.length === 0
 
     if(this.Paused){
@@ -128,7 +134,20 @@ class Sokoban {
       this.context.font = 'bold 40px sans-serif'
       this.context.fillStyle = colors.success_block.fill
       this.context.fillText('You did it!', 130, 250)
-      appendToLocalStorage("run_outcome", `run_outcome_${getPageId()}_${getAttempts()}`, {"game": "soko", "attempt": getAttempts(), "res": "success", "t": Date.now()})
+      let outcome_obj = {
+          "game": "soko",
+          "id": PageId,
+          "attempt": getAttempts(),
+          "t": Date.now(),
+          "res" : "success",
+          "right_key": getCount_right(),
+          "left_key": getCount_left(),
+          "down_key": getCount_down(),
+          "up_key": getCount_up(),
+          "targets_left" : rowsWithVoid.length
+        }
+        justsendtoparent(`log_${PageId}_${Attempts}`, outcome_obj)
+        console.log(outcome_obj)
       // clearLocalStorage()
       this.board = generateGameBoard(this.level)
     }

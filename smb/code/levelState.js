@@ -550,7 +550,7 @@ Mario.LevelState.prototype.CheckForChange = function(context) {
                 "pos_x": Mario.MarioCharacter.XDeathPos,
                 "pos_y": Mario.MarioCharacter.YDeathPos
             }
-        justsendtoparent(`run_outcome_${this.PageId}_${this.Attempts}`, outcome_obj)
+        justsendtoparent(`log_${this.PageId}_${this.Attempts}`, outcome_obj)
         console.log(outcome_obj)
         context.ChangeState(new Mario.LevelState(1, Mario.LevelType.Overground, this.Text, this.PageId, this.Attempts+1));
         const canvas = document.getElementById("canvas");
@@ -569,7 +569,7 @@ Mario.LevelState.prototype.CheckForChange = function(context) {
                 "pos_x": Mario.MarioCharacter.XDeathPos,
                 "pos_y": Mario.MarioCharacter.YDeathPos
             }
-        justsendtoparent(`run_outcome_${this.PageId}_${this.Attempts}`, outcome_obj)
+        justsendtoparent(`log_${this.PageId}_${this.Attempts}`, outcome_obj)
         console.log(outcome_obj)
         context.ChangeState(new Mario.WinState(this.Text));
         const canvas = document.getElementById("canvas");

@@ -50,13 +50,13 @@ function justsendtoparent(global_key, newEntry) {
 // }
 // }
 
-function clearLocalStorage(){
-    localStorage.removeItem("run_outcome");
-    for (let i = 0; i < localStorage.length; i++) {
-    let key = localStorage.key(i);
-    if (key.startsWith("key_count")) {
-        localStorage.removeItem(key);
-        i--; // adjust index since length changes after removal
-    }
-}
-}
+// function clearLocalStorage(){
+//     localStorage.removeItem("run_outcome");
+//     for (let i = 0; i < localStorage.length; i++) {
+//     let key = localStorage.key(i);
+//     if (key.startsWith("key_count")) {
+//         localStorage.removeItem(key);
+//         i--; // adjust index since length changes after removal
+//     }
+// }
+// }
