@@ -90,7 +90,7 @@ document.getElementById('restart').addEventListener('click', (event) => {
                 "targets_left" : getTargetsLeft()
   }
   justsendtoparent(`log_${PageId}_${Attempts}`, outcome_obj)
-  console.log(outcome_obj)
+  // console.log(outcome_obj)
   Attempts += 1
   const canvas = document.getElementById("sokocanvas");
   canvas.focus();
@@ -99,7 +99,7 @@ document.getElementById('restart').addEventListener('click', (event) => {
 
 document.getElementById('start').addEventListener('click', (event) => {
   const hash = window.location.hash
-  console.log(hash)
+  // console.log(hash)
   PageId = hash.replace('#', '') || "8Ua6YU1D";
   Attempts = 1
   let outcome_obj = {
@@ -115,7 +115,7 @@ document.getElementById('start').addEventListener('click', (event) => {
                 "targets_left" : getTargetsLeft()
   }
   justsendtoparent(`log_${PageId}_${Attempts}`, outcome_obj)
-  console.log(outcome_obj)
+  // console.log(outcome_obj)
   event.target.remove(); // removes the clicked button
   document.getElementById('restart').style.display = 'inline-block';
   document.getElementById('sound').style.display = 'inline-block';

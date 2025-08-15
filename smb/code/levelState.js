@@ -123,7 +123,7 @@ Mario.LevelState.prototype.Enter = function() {
         "pos_y": Mario.MarioCharacter.YDeathPos
     }
     justsendtoparent(`log_${this.PageId}_${this.Attempts}`, outcome_obj)
-    console.log(outcome_obj)
+    // console.log(outcome_obj)
 };
 
 Mario.LevelState.prototype.Exit = function() {
@@ -525,7 +525,7 @@ Mario.LevelState.prototype.Save = function() {
 
     var patchSize = 8 * tileSize;  // width of each chunk
     var chunkCount = Math.ceil(fullWidth / patchSize);
-    console.log(chunkCount)
+    // console.log(chunkCount)
     var fullCamera = { X: 0, Width: patchSize, Height: fullHeight };
 
     for (let c = 0; c < chunkCount; c++) {
@@ -566,7 +566,7 @@ Mario.LevelState.prototype.CheckForChange = function(context) {
                 "pos_y": Mario.MarioCharacter.YDeathPos
             }
         justsendtoparent(`log_${this.PageId}_${this.Attempts}`, outcome_obj)
-        console.log(outcome_obj)
+        // console.log(outcome_obj)
         context.ChangeState(new Mario.LevelState(1, Mario.LevelType.Overground, this.Text, this.PageId, this.Attempts+1));
         const canvas = document.getElementById("canvas");
         canvas.focus();
@@ -585,7 +585,7 @@ Mario.LevelState.prototype.CheckForChange = function(context) {
                 "pos_y": Mario.MarioCharacter.YDeathPos
             }
         justsendtoparent(`log_${this.PageId}_${this.Attempts}`, outcome_obj)
-        console.log(outcome_obj)
+        // console.log(outcome_obj)
         context.ChangeState(new Mario.WinState(this.Text));
         const canvas = document.getElementById("canvas");
         canvas.focus();
