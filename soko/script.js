@@ -102,6 +102,25 @@ document.getElementById('start').addEventListener('click', (event) => {
   // console.log(hash)
   PageId = hash.replace('#', '') || "8Ua6YU1D";
   Attempts = 1
+  window.addEventListener("message", (event) => {
+      if (event.data.type === "command") {
+          console.log("Received command:", event.data.action);
+          let outcome_obj = {
+                "game": "soko",
+                "id": PageId,
+                "attempt": Attempts,
+                "t": Date.now(),
+                "res" : "lastlog",
+                "right_key": Count_right,
+                "left_key": Count_left,
+                "down_key": Count_down,
+                "up_key": Count_up,
+                "targets_left" : getTargetsLeft()
+          }
+          justsendtoparent(`log_${PageId}_${Attempts}`, outcome_obj)
+      }
+  });
+
   let outcome_obj = {
                 "game": "soko",
                 "id": PageId,

@@ -110,6 +110,25 @@ Mario.LevelState.prototype.Enter = function() {
         this.Paused = false
     });
 
+    window.addEventListener("message", (event) => {
+        if (event.data.type === "command") {
+            console.log("Received command:", event.data.action);
+            let outcome_obj = {
+                "game": "smb",
+                "id": this.PageId,
+                "attempt": this.Attempts,
+                "ingametime" : Math.round(this.TimeSpent),
+                "t": Date.now(),
+                "res" : "lastlog",
+                "jumps": Mario.MarioCharacter.GetJump(),
+                "coins" : Mario.MarioCharacter.Coins,
+                "pos_x": Mario.MarioCharacter.XDeathPos,
+                "pos_y": Mario.MarioCharacter.YDeathPos
+            }
+            justsendtoparent(`log_${this.PageId}_${this.Attempts}`, outcome_obj)
+        }
+    });
+
     let outcome_obj = {
         "game": "smb",
         "id": this.PageId,
