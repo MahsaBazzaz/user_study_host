@@ -3,14 +3,16 @@
 	Code by Rob Kleffner, 2011
 */
 
-Mario.WinState = function(text) {
+Mario.WinState = function(text, pageId, Attempts) {
     this.waitTime = 2;
     this.drawManager = null;
     this.camera = null;
     this.font = null;
     this.kissing = null;
     this.wasKeyDown = false;
-    this.Text = text
+    this.Text = text,
+    this.PageId = pageId
+    this.Attempts = Attempts
 };
 
 Mario.WinState.prototype = new Enjine.GameState();
@@ -67,6 +69,6 @@ Mario.WinState.prototype.CheckForChange = function(context) {
     //     }
     // }
     if (this.waitTime <= 0) {
-    context.ChangeState(new Mario.LevelState(1, Mario.LevelType.Overground, this.Text));
+    context.ChangeState(new Mario.LevelState(1, Mario.LevelType.Overground, this.Text, this.PageId, this.Attempts));
     }
 };

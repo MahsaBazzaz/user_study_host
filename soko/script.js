@@ -5,6 +5,10 @@ import {appendToLocalStorage, readFromLocalStorage, setToLocalStorage, updateLoc
 // init
 let sokoban
 let Attempts = 1
+let Count_up = 0
+let Count_down = 0
+let Count_right = 0
+let Count_left = 0
 let PageId = ""
 export function getAttempts() {
     return Attempts;
@@ -25,32 +29,36 @@ document.addEventListener('keydown', (event) => {
       event.preventDefault();
       event.stopPropagation();
       sokoban.move(playerCoords, directions.up)
-      justsendtoparent("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "up",  "t": Date.now()})
-      updateLocalStorage("key_count", `key_count_up_${PageId}_${Attempts}`)
+      // justsendtoparent("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "up",  "t": Date.now()})
+      // updateLocalStorage("key_count", `key_count_up_${PageId}_${Attempts}`)
+      Count_up += 1
       break
     case keys.down:
     case keys.s:
       event.preventDefault();
       event.stopPropagation();
       sokoban.move(playerCoords, directions.down)
-      justsendtoparent("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "down",  "t": Date.now()})
-      updateLocalStorage("key_count", `key_count_down_${PageId}_${Attempts}`)
+      // justsendtoparent("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "down",  "t": Date.now()})
+      // updateLocalStorage("key_count", `key_count_down_${PageId}_${Attempts}`)
+      Count_down +=1
       break
     case keys.left:
     case keys.a:
       event.preventDefault();
       event.stopPropagation();
       sokoban.move(playerCoords, directions.left)
-      justsendtoparent("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "left",  "t": Date.now()})
-      updateLocalStorage("key_count", `key_count_left_${PageId}_${Attempts}`)
+      // justsendtoparent("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "left",  "t": Date.now()})
+      // updateLocalStorage("key_count", `key_count_left_${PageId}_${Attempts}`)
+      Count_left += 1
       break
     case keys.right:
     case keys.d:
       event.preventDefault();
       event.stopPropagation();
       sokoban.move(playerCoords, directions.right)
-      justsendtoparent("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "right",  "t": Date.now()})
-      updateLocalStorage("key_count", `key_count_right_${PageId}_${Attempts}`)
+      // justsendtoparent("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "move": "right",  "t": Date.now()})
+      // updateLocalStorage("key_count", `key_count_right_${PageId}_${Attempts}`)
+      Count_right += 1
       break
     default:
   }
@@ -60,6 +68,8 @@ document.addEventListener('keydown', (event) => {
 
 document.getElementById('restart').addEventListener('click', (event) => {
   appendToLocalStorage("run_outcome", `run_outcome_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "res": "reset", "t": Date.now()})
+  justsendtoparent("key_log", `key_log_${PageId}_${Attempts}`, {"game": "soko", "attempt": Attempts, "t": Date.now(), "r": Count_right, "l": Count_left, "u": Count_up, "d": Count_down})
+  console.log(`"game": "soko", "attempt": ${Attempts}, "r": ${Count_right}, "l": ${Count_left}, "u": ${Count_up}, "d": ${Count_down}`)
   Attempts += 1
   // setToLocalStorage(`Attempts_${PageId}`, Attempts)
   // clearLocalStorage()

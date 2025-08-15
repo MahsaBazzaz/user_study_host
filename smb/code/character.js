@@ -46,6 +46,8 @@ Mario.Character = function() {
     this.LastFire = false;
     this.NewLarge = false;
     this.NewFire = false;
+
+    this.Count_jump = 0
 };
 
 Mario.Character.prototype = new Mario.NotchSprite(null);
@@ -85,7 +87,7 @@ Mario.Character.prototype.Initialize = function(world) {
     
     //Sprite
     this.Carried = null;
-    
+    this.Count_jump = 0
     this.SetLarge(this.Large, this.Fire);
 };
 
@@ -202,8 +204,7 @@ Mario.Character.prototype.Move = function() {
             this.JumpTime++;
         } else if (this.OnGround && this.MayJump) {
             Enjine.Resources.PlaySound("jump");
-            justsendtoparent("key_log", `key_log_${this.PageId}_${this.Attempts}`, {"game": "smb", "attempt": this.Attempts, "key": "jump", "t": Date.now()})
-            updateLocalStorage("key_count", `key_count_jump_${this.PageId}_${this.Attempts}`)
+            this.Count_jump += 1
             this.XJumpSpeed = 0;
             // this.YJumpSpeed = -1.9;
             this.YJumpSpeed = -2.1;
@@ -213,8 +214,7 @@ Mario.Character.prototype.Move = function() {
             this.Sliding = false;
         } else if (this.Sliding && this.MayJump) {
             Enjine.Resources.PlaySound("jump");
-            justsendtoparent("key_log", `key_log_${this.PageId}_${this.Attempts}`, {"game": "smb", "attempt": this.Attempts, "key": "jump", "t": Date.now()})
-            updateLocalStorage("key_count", `key_count_jump_${this.PageId}_${this.Attempts}`)
+            this.Count_jump += 1
             this.XJumpSpeed = -this.Facing * 6;
             // this.YJumpSpeed = -2;
             this.YJumpSpeed = -2.1;
@@ -672,4 +672,8 @@ Mario.Character.prototype.GetCoin = function() {
         this.Coins = 0;
         this.Get1Up();
     }
+};
+
+Mario.Character.prototype.GetJump = function() {
+    return this.Count_jump
 };

@@ -10,7 +10,7 @@ Mario.LevelState = function(difficulty, type, text, pageId, Attempts) {
     this.Text = text
     this.PageId = pageId
     this.Attempts = Attempts
-
+    
     // console.log("I am state, this is what I've got: " + text)
     
     this.Level = null;
@@ -350,9 +350,6 @@ Mario.LevelState.prototype.Draw = function(context) {
         t = t * t * 0.2;
 
         if (t > 900) {
-            appendToLocalStorage("run_outcome", `run_outcome_${this.PageId}_${this.Attempts}`, {"game": "smb", "attempt": this.Attempts, "res" : "success",
-                 "coins" : Mario.MarioCharacter.Coins, "time" : this.TimeSpent,  "t": Date.now()})
-            // clearLocalStorage()
 			this.GotoMapState = true;
         }
 
@@ -369,10 +366,6 @@ Mario.LevelState.prototype.Draw = function(context) {
             Mario.MarioCharacter.Lives--;
             // this.GotoMapState = true;
 			if (Mario.MarioCharacter.Lives <= 0) {
-                appendToLocalStorage("run_outcome", `run_outcome_${this.PageId}_${this.Attempts}`, {"game": "smb", "attempt": this.Attempts, "res" : "fail", 
-                    "coins" : Mario.MarioCharacter.Coins, "time" : this.TimeSpent,  "t": Date.now(), 
-                    "pos_x": Mario.MarioCharacter.XDeathPos, "pos_y": Mario.MarioCharacter.YDeathPos})
-                // clearLocalStorage()
 				this.GotoLoseState = true;
 			}
         }
@@ -545,11 +538,39 @@ Mario.LevelState.prototype.Save = function() {
 
 Mario.LevelState.prototype.CheckForChange = function(context) {
 	if (this.GotoLoseState) {
+        let outcome_obj = {
+                "game": "smb",
+                "id": this.PageId,
+                "attempt": this.Attempts,
+                "ingametime" : Math.round(this.TimeSpent),
+                "t": Date.now(),
+                "res" : "fail",
+                "jumps": Mario.MarioCharacter.GetJump(),
+                "coins" : Mario.MarioCharacter.Coins,
+                "pos_x": Mario.MarioCharacter.XDeathPos,
+                "pos_y": Mario.MarioCharacter.YDeathPos
+            }
+        justsendtoparent(`run_outcome_${this.PageId}_${this.Attempts}`, outcome_obj)
+        console.log(outcome_obj)
         context.ChangeState(new Mario.LevelState(1, Mario.LevelType.Overground, this.Text, this.PageId, this.Attempts+1));
         const canvas = document.getElementById("canvas");
         canvas.focus();
 	}
 	if (this.GotoMapState) {
+        let outcome_obj = {
+                "game": "smb",
+                "id": this.PageId,
+                "attempt": this.Attempts,
+                "ingametime" : Math.round(this.TimeSpent),
+                "t": Date.now(),
+                "res" : "success",
+                "jumps": Mario.MarioCharacter.GetJump(),
+                "coins" : Mario.MarioCharacter.Coins,
+                "pos_x": Mario.MarioCharacter.XDeathPos,
+                "pos_y": Mario.MarioCharacter.YDeathPos
+            }
+        justsendtoparent(`run_outcome_${this.PageId}_${this.Attempts}`, outcome_obj)
+        console.log(outcome_obj)
         context.ChangeState(new Mario.WinState(this.Text));
         const canvas = document.getElementById("canvas");
         canvas.focus();
