@@ -43,6 +43,12 @@
                         console.log('Error loading level data: ' + error);
                     });
 
+            window.addEventListener("message", (event) => {
+                if (event.data.type === "command") {
+                    console.log("Received command:", event.data.action);
+                }
+            });
+
             })
             const sound_button = document.getElementById('sound')
             sound_button.addEventListener('click', (event) => {

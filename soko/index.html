@@ -36,8 +36,13 @@
             sound_button.style.backgroundColor = "#d51b2c";
             sound_button.textContent = "mute";
         }
-
     })
+
+    window.addEventListener("message", (event) => {
+                if (event.data.type === "command") {
+                    console.log("Received command:", event.data.action);
+                }
+    });
   </script>
   <script type="module" src="constants.js"></script>
   <script type="module" src="utils.js"></script>
