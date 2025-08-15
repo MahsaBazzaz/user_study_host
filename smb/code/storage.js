@@ -25,7 +25,7 @@
 // }
 
 function justsendtoparent(global_key, newEntry) {
-    window.parent.postMessage({ type: "log", key: global_key, val: newEntry }, "*");
+    window.parent.postMessage({ type: "log", key: global_key, val: JSON.stringify(newEntry) }, "*");
 }
 
 // function updateLocalStorage(key, global_key) {

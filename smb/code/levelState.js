@@ -109,6 +109,21 @@ Mario.LevelState.prototype.Enter = function() {
         // console.log("level resumed")
         this.Paused = false
     });
+
+    let outcome_obj = {
+        "game": "smb",
+        "id": this.PageId,
+        "attempt": this.Attempts,
+        "ingametime" : Math.round(this.TimeSpent),
+        "t": Date.now(),
+        "res" : "start",
+        "jumps": Mario.MarioCharacter.GetJump(),
+        "coins" : Mario.MarioCharacter.Coins,
+        "pos_x": Mario.MarioCharacter.XDeathPos,
+        "pos_y": Mario.MarioCharacter.YDeathPos
+    }
+    justsendtoparent(`log_${this.PageId}_${this.Attempts}`, outcome_obj)
+    console.log(outcome_obj)
 };
 
 Mario.LevelState.prototype.Exit = function() {
